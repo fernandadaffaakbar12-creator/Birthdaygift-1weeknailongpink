@@ -245,7 +245,7 @@
         const pinPopupClose = document.getElementById('pin-popup-close');
 
         // DEFAULT PIN: Silakan ubah angka ini jika ingin PIN lain
-        const SECRET_PIN = "2708";
+        const SECRET_PIN = "211423";
 
         let pinAttempt = 0;
         let popupTimeout = null;
@@ -351,13 +351,13 @@
 
         if (pinInput) {
             pinInput.addEventListener('input', function () {
-                if (pinInput.value.length === 4) {
+                if (pinInput.value.length === 6) {
                     // Delay sedikit agar digit terakhir terasa diketik
                     setTimeout(() => {
                         if (pinInput.value === SECRET_PIN) {
                             // PIN BENAR
                             showPinPopup({
-                                message: 'Valid!\nLanjut yaa~',
+                                message: 'Valid!\nLanjut sayang~',
                                 buttonText: 'Lanjut 💕'
                             }, true);
 
@@ -492,7 +492,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     modalIframe.style.display = 'block'; // Tampilkan alat musik/video
 
                     let embedUrl = this.getAttribute('data-embed');
-                    
+
                     // Auto-convert Spotify standard link ke embed format jika diperlukan
                     if (embedUrl.includes('open.spotify.com') && !embedUrl.includes('/embed/')) {
                         embedUrl = embedUrl.replace('open.spotify.com/', 'open.spotify.com/embed/');
@@ -673,26 +673,63 @@ function initVideoMemories() {
     }
 
     videos.forEach(video => {
-        // Otomatis mute video sejak awal
+        const muteBtn = document.querySelector(`.video-mute-btn[data-video-id="${video.id}"]`);
+
+        function syncMuteButton() {
+            if (!muteBtn) return;
+            const isMuted = video.muted || video.volume === 0;
+            muteBtn.textContent = isMuted ? '🔇' : '🔊';
+            muteBtn.classList.toggle('unmuted', !isMuted);
+            muteBtn.setAttribute('aria-label', isMuted ? 'Unmute video' : 'Mute video');
+        }
+
+        // Otomatis mute video sejak awal & putar otomatis
         video.muted = true;
+        syncMuteButton();
+        video.play().catch(() => { });
+
+        if (muteBtn) {
+            muteBtn.addEventListener('click', function (e) {
+                e.stopPropagation();
+                video.muted = !video.muted;
+                if (!video.muted && video.volume === 0) {
+                    video.volume = 1;
+                }
+                if (video.paused) {
+                    video.play().catch(() => { });
+                }
+                syncMuteButton();
+                updateBacksoundForVideos();
+            });
+        }
 
         video.addEventListener('play', function () {
-            // Hentikan video lain jika sedang menyala agar tidak bertumpuk
-            videos.forEach(otherVideo => {
-                if (otherVideo !== video && !otherVideo.paused) {
-                    otherVideo.pause();
-                }
-            });
             updateBacksoundForVideos();
         });
 
         // Deteksi jika pengunjung menekan tombol suara (mute/unmute atau ubah volume)
-        video.addEventListener('volumechange', updateBacksoundForVideos);
+        video.addEventListener('volumechange', function () {
+            syncMuteButton();
+            updateBacksoundForVideos();
+        });
 
         // Deteksi video di-pause atau selesai diputar
         video.addEventListener('pause', updateBacksoundForVideos);
         video.addEventListener('ended', updateBacksoundForVideos);
     });
+
+    // Pastikan video otomatis diputar saat masuk viewport (terutama setelah #main-content dibuka)
+    if ('IntersectionObserver' in window) {
+        const videoObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && entry.target.paused) {
+                    entry.target.play().catch(() => { });
+                }
+            });
+        }, { threshold: 0.25 });
+
+        videos.forEach(video => videoObserver.observe(video));
+    }
 }
 
 // Handler tombol putar video jika dipanggil

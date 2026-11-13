@@ -900,25 +900,17 @@ body {
     text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.6);
 }
 
-/* Posisi 5 Kartu Planet (72 derajat) dengan jarak saling berdekatan proporsional */
+/* Posisi 3 Kartu Planet (120 derajat) dengan jarak berdekatan namun tetap lega */
 .item1 {
-    transform: rotateY(0deg) translateZ(240px);
+    transform: rotateY(0deg) translateZ(140px);
 }
 
 .item2 {
-    transform: rotateY(72deg) translateZ(240px);
+    transform: rotateY(120deg) translateZ(140px);
 }
 
 .item3 {
-    transform: rotateY(144deg) translateZ(240px);
-}
-
-.item4 {
-    transform: rotateY(216deg) translateZ(240px);
-}
-
-.item5 {
-    transform: rotateY(288deg) translateZ(240px);
+    transform: rotateY(240deg) translateZ(140px);
 }
 
 /* =========================================
@@ -1272,6 +1264,41 @@ body {
     border-radius: 12px;
 }
 
+.video-mute-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 3;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 105, 180, 0.55);
+    background: rgba(255, 240, 245, 0.78);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: #5a0022;
+    font-size: 1rem;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.video-mute-btn:hover {
+    transform: scale(1.08);
+    background: rgba(255, 220, 235, 0.95);
+    box-shadow: 0 4px 14px rgba(255, 20, 147, 0.3);
+}
+
+.video-mute-btn.unmuted {
+    background: rgba(255, 105, 180, 0.88);
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.7);
+}
+
 .video-card-caption {
     margin-top: 10px;
     display: flex;
@@ -1607,25 +1634,17 @@ body {
         font-size: 0.95rem;
     }
 
-    /* Menyesuaikan jarak orbit 5 kartu di HP */
+    /* Menyesuaikan jarak orbit 3 kartu di HP */
     .item1 {
-        transform: rotateY(0deg) translateZ(180px);
+        transform: rotateY(0deg) translateZ(110px);
     }
 
     .item2 {
-        transform: rotateY(72deg) translateZ(180px);
+        transform: rotateY(120deg) translateZ(110px);
     }
 
     .item3 {
-        transform: rotateY(144deg) translateZ(180px);
-    }
-
-    .item4 {
-        transform: rotateY(216deg) translateZ(180px);
-    }
-
-    .item5 {
-        transform: rotateY(288deg) translateZ(180px);
+        transform: rotateY(240deg) translateZ(110px);
     }
 
     #main-content {
@@ -1660,14 +1679,14 @@ body {
     }
 
     .video-cards-grid {
-        grid-template-columns: 1fr;
-        gap: 22px;
-        max-width: 290px;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        max-width: 100%;
         margin: 0 auto;
     }
 
     .video-card-item {
-        padding: 10px;
+        padding: 8px;
         border-radius: 14px;
         width: 100%;
     }
@@ -2491,38 +2510,40 @@ body {
     width: 200px;
 }
 
-/* Kue bertema kuning */
+/* Kue bertema Strawberry Susu */
 .cake-top {
     width: 200px;
     height: 18px;
-    background: linear-gradient(180deg, #fdd835, #ff1493);
-    border-radius: 8px 8px 0 0;
+    background: linear-gradient(180deg, #fffdf9, #ffe5ec);
+    border-radius: 10px 10px 0 0;
     position: relative;
     z-index: 1;
-    box-shadow: 0 -2px 8px rgba(253, 216, 53, 0.3);
+    box-shadow: 0 -2px 10px rgba(255, 182, 193, 0.45);
+    border-top: 2px solid rgba(255, 255, 255, 0.9);
 }
 
 .cake-middle {
     width: 200px;
     height: 55px;
-    background: linear-gradient(180deg, #fff0f5, #ffd1dc);
+    background: linear-gradient(180deg, #ffc2d1 0%, #ff8fab 65%, #ff4d6d 100%);
     position: relative;
-    border-left: 3px solid rgba(255,255,255,0.1);
-    border-right: 3px solid rgba(0,0,0,0.05);
+    border-left: 3px solid rgba(255, 255, 255, 0.25);
+    border-right: 3px solid rgba(255, 105, 135, 0.15);
 }
 
 .cake-bottom {
     width: 200px;
     height: 55px;
-    background: linear-gradient(180deg, #fdd835, #ff1493);
-    border-radius: 0 0 8px 8px;
+    background: linear-gradient(180deg, #fff9fb 0%, #ffe3ec 55%, #ffb3c6 100%);
+    border-radius: 0 0 10px 10px;
     position: relative;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-    border-left: 3px solid rgba(255,255,255,0.1);
-    border-right: 3px solid rgba(0,0,0,0.05);
+    box-shadow: 0 8px 20px rgba(255, 105, 180, 0.28);
+    border-left: 3px solid rgba(255, 255, 255, 0.35);
+    border-right: 3px solid rgba(255, 143, 171, 0.2);
+    border-bottom: 4px solid #ff8fab;
 }
 
-/* Frosting drips */
+/* Frosting drips (krim susu) */
 .cake-frosting {
     position: absolute;
     top: 15px;
@@ -2537,8 +2558,9 @@ body {
     display: block;
     width: 16px;
     height: 22px;
-    background: linear-gradient(180deg, #ffb6c1, #fdd835);
+    background: linear-gradient(180deg, #fffdf9 0%, #ffe5ec 75%, #ffb3c6 100%);
     border-radius: 0 0 50% 50%;
+    box-shadow: 0 2px 4px rgba(255, 105, 135, 0.2);
     animation: frostDrip 3s ease-in-out infinite alternate;
 }
 
@@ -2561,7 +2583,8 @@ body {
     display: flex;
     justify-content: space-around;
     padding: 0 10px;
-    font-size: 0.8rem;
+    font-size: 0.85rem;
+    filter: drop-shadow(0 1px 2px rgba(255, 77, 109, 0.35));
 }
 
 /* Glow di sekitar kue */
@@ -2573,7 +2596,7 @@ body {
     transform: translateX(-50%);
     width: 250px;
     height: 60px;
-    background: radial-gradient(ellipse, rgba(253, 216, 53, 0.2), transparent 70%);
+    background: radial-gradient(ellipse, rgba(255, 143, 171, 0.32), transparent 70%);
     border-radius: 50%;
     z-index: 0;
 }
